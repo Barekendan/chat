@@ -1,0 +1,22 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "react-native-elements@1.1.0",
+      "destination": "wwwroot/react-native-elements/"
+    },
+    {
+      "library": "react@16.8.6",
+      "destination": "wwwroot/react/"
+    },
+    {
+      "library": "react-dom@16.8.6",
+      "destination": "wwwroot/react-dom/"
+    },
+    {
+      "library": "signalr.js@2.4.0",
+      "destination": "wwwroot/signalr.js/"
+    }
+  ]
+}
