@@ -4,19 +4,19 @@
   "libraries": [
     {
       "library": "react-native-elements@1.1.0",
-      "destination": "wwwroot/react-native-elements/"
+      "destination": "wwwroot/lib/react-native-elements/"
     },
     {
       "library": "react@16.8.6",
-      "destination": "wwwroot/react/"
+      "destination": "wwwroot/lib/react/"
     },
     {
       "library": "react-dom@16.8.6",
-      "destination": "wwwroot/react-dom/"
+      "destination": "wwwroot/lib/react-dom/"
     },
     {
       "library": "signalr.js@2.4.0",
-      "destination": "wwwroot/signalr.js/"
+      "destination": "wwwroot/lib/signalr.js/"
     }
   ]
 }
