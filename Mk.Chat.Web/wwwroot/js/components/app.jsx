@@ -10,6 +10,18 @@ export default class App extends React.Component {
             messages: [],
             currentUser: null
         }
+
+        this.setCurrentUser = this.setCurrentUser.bind(this);
+    }
+
+    setCurrentUser(user) {
+        this.setState((oldState) => {
+            let state = {};
+            Object.assign(state, oldState);
+            state.currentUser = user;
+
+            return state;
+        });
     }
 
     componentDidMount() {
@@ -22,6 +34,19 @@ export default class App extends React.Component {
 
                     return state;
                 });
+            });
+
+        $.get('api/users/current',
+            user => {
+                if (user) {
+                    this.setCurrentUser(user);
+                } else {
+                    let userName = prompt("User name");
+
+                    if (userName) {
+                        $.post('api/users', { userName: userName }, this.setCurrentUser);
+                    }
+                }
             });
     }
 

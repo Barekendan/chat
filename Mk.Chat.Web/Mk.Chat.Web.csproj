@@ -15,4 +15,9 @@
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <ProjectReference Include="..\Mk.Chat.Services\Mk.Chat.Services.csproj" />
+  </ItemGroup>
+
 </Project>

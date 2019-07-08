@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Mk.Chat.Services;
+using Mk.Chat.Services.Contracts;
 
 namespace Mk.Chat.Web
 {
@@ -31,6 +33,10 @@ namespace Mk.Chat.Web
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddDistributedMemoryCache();
+            services.AddSession();
+
+            services.AddSingleton<IUserStore>(new UserInMemoryStore());
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
@@ -49,6 +55,9 @@ namespace Mk.Chat.Web
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            app.UseSession();
+
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
