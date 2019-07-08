@@ -5,12 +5,15 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Connections;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Mk.Chat.Services;
 using Mk.Chat.Services.Contracts;
+using Mk.Chat.Services.Hubs;
+using Mk.Chat.Services.Stores;
 
 namespace Mk.Chat.Web
 {
@@ -36,6 +39,9 @@ namespace Mk.Chat.Web
             services.AddDistributedMemoryCache();
             services.AddSession();
 
+            services.AddSignalR(options => { options.EnableDetailedErrors = true; })
+                .AddHubOptions<ChatHub>(options => { });
+
             services.AddSingleton<IUserStore>(new UserInMemoryStore());
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
@@ -58,6 +64,11 @@ namespace Mk.Chat.Web
 
             app.UseSession();
 
+            app.UseSignalR(builder =>
+                {
+                    builder.MapHub<ChatHub>("/chathub", options => options.Transports = HttpTransportType.WebSockets);
+                });
+            
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

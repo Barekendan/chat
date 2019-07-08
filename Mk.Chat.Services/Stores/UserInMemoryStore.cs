@@ -5,7 +5,7 @@ using System.Linq;
 using Mk.Chat.Model;
 using Mk.Chat.Services.Contracts;
 
-namespace Mk.Chat.Services
+namespace Mk.Chat.Services.Stores
 {
     public class UserInMemoryStore : IUserStore
     {

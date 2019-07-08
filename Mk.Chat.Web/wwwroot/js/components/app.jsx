@@ -1,4 +1,5 @@
 ﻿import React from 'react';
+import { HubConnectionBuilder, LogLevel } from '@aspnet/signalr';
 import UserList from './user/user-list.jsx';
 import Messenger from './message/messenger.jsx';
 
@@ -8,32 +9,21 @@ export default class App extends React.Component {
         this.state = {
             users: [],
             messages: [],
-            currentUser: null
+            currentUser: null,
+            hubConnection: null
         }
 
         this.setCurrentUser = this.setCurrentUser.bind(this);
     }
 
     setCurrentUser(user) {
-        this.setState((oldState) => {
-            let state = {};
-            Object.assign(state, oldState);
-            state.currentUser = user;
-
-            return state;
-        });
+        this.setState({currentUser: user});
     }
 
     componentDidMount() {
         $.get("api/Users",
             data => {
-                this.setState((oldState) => {
-                    let state = {};
-                    Object.assign(state, oldState);
-                    state.users = data;
-
-                    return state;
-                });
+                this.setState({users: data});
             });
 
         $.get('api/users/current',
@@ -48,15 +38,31 @@ export default class App extends React.Component {
                     }
                 }
             });
+
+        this.connection = new HubConnectionBuilder()
+            .withUrl('/chathub')
+            .configureLogging(LogLevel.Information)
+            .build();
+
+        this.connection.on('ReceiveNewUser',
+            user => {
+
+                this.setState((oldState) => {
+                    let users = oldState.users.concat(user);
+                    return { users };
+                });
+            });
+
+        this.connection.start();
     }
 
     render() {
         return (
-            <table>
+            <table className="chat">
                 <tbody>
                     <tr>
                         <td style={{verticalAlign: 'top'}}>
-                            <UserList users={this.state.users}/>
+                            <UserList currentUserId={this.state.currentUser && this.state.currentUser.id} users={this.state.users}/>
                         </td>
                         <td>
                             <Messenger />

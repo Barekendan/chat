@@ -22,6 +22,7 @@
     "webpack": "^3.11.0"
   },
   "dependencies": {
+    "@aspnet/signalr": "^1.1.4",
     "babel-polyfill": "^6.26.0",
     "isomorphic-fetch": "^2.2.1",
     "query-string": "^5.0.1",
@@ -31,6 +32,7 @@
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.2",
     "redux": "^3.7.2",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "signalr": "^2.4.1"
   }
 }

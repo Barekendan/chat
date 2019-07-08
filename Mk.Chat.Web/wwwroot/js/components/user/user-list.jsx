@@ -15,7 +15,10 @@ export default class UserList extends React.Component {
     render() {
         return (
             <div style={{width: 150, paddingLeft: 20}} >
-                    {this.props.users.map((user) => <User key={user.id} name={user.name} />)}
+                {this.props.users.map((user) => 
+                    <User isCurrent={this.props.currentUserId === user.id} key={ user.id } name={ user.name }/>
+                )}
+                
             </div>
         );
     }

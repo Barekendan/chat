@@ -3,7 +3,7 @@
 export default class User extends React.Component {
     render() {
         return (
-            <div>{this.props.name}</div>
+            <div style={this.props.isCurrent ? { fontWeight: 'bold', fontStyle: 'italic' } : {}}>{this.props.name}</div>
         );
     }
 };

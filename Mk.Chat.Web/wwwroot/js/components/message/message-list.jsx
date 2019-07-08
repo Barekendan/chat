@@ -5,12 +5,7 @@ export default class MessageList extends React.Component {
     constructor() {
         super();
         this.state = {
-            messages: [
-                {
-                    id: 1,
-                    user: {id: 3, name: 'Vova'},
-                    text: "Hello"
-                }]
+            messages: []
         }
     }
 
