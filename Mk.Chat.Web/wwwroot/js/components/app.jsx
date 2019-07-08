@@ -12,12 +12,6 @@ export default class App extends React.Component {
             currentUser: null,
             hubConnection: null
         }
-
-        this.setCurrentUser = this.setCurrentUser.bind(this);
-    }
-
-    setCurrentUser(user) {
-        this.setState({currentUser: user});
     }
 
     componentDidMount() {
@@ -27,14 +21,15 @@ export default class App extends React.Component {
             });
 
         $.get('api/users/current',
-            user => {
-                if (user) {
-                    this.setCurrentUser(user);
+            currentUser => {
+                if (currentUser) {
+                    this.setState({ currentUser });
                 } else {
                     let userName = prompt("User name");
 
                     if (userName) {
-                        $.post('api/users', { userName: userName }, this.setCurrentUser);
+                        $.post('api/users', { userName: userName },
+                            currentUser => this.setState({ currentUser }));
                     }
                 }
             });
@@ -46,7 +41,6 @@ export default class App extends React.Component {
 
         this.connection.on('ReceiveNewUser',
             user => {
-
                 this.setState((oldState) => {
                     let users = oldState.users.concat(user);
                     return { users };
